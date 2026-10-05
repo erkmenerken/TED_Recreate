@@ -1,0 +1,261 @@
+{
+ "n_proteins": 600,
+ "n_ted_domains": 1037,
+ "failed": {
+  "afdb": 0,
+  "esm": 0
+ },
+ "timings": {
+  "chop_afdb_seconds": 1178.5398089885712,
+  "chop_afdb_n": 600,
+  "chop_esm_seconds": 7465.6375596523285,
+  "chop_esm_n": 600,
+  "label_ted_seconds": 711.6973302364349,
+  "label_ted_n": 1037,
+  "label_afdb_seconds": 680.4386982917786,
+  "label_afdb_n": 1032,
+  "label_esm_seconds": 689.9489932060242,
+  "label_esm_n": 1049
+ },
+ "afdb": {
+  "proteins": 600,
+  "ted_domains": 1037,
+  "our_domains": 1032,
+  "proteins_all_domains_exact": 0.9683333333333334,
+  "proteins_same_domain_count": 0.9883333333333333,
+  "ted_domains_exact": 0.9797492767598843,
+  "ted_domains_iou>=0.9": 0.9855351976856316,
+  "ted_domains_iou>=0.8": 0.9874638379942141,
+  "ted_domains_iou>=0.5": 0.9932497589199615,
+  "our_domains_with_ted_counterpart_iou>=0.8": 0.9922480620155039,
+  "our_domains_without_counterpart_iou<0.5": 0.001937984496124031,
+  "mean_residue_agreement": 0.9910084999999998,
+  "boundaries_within_0": 0.9919224555735057,
+  "boundaries_within_1": 0.9939418416801292,
+  "boundaries_within_2": 0.9951534733441034,
+  "boundaries_within_5": 0.9955573505654282,
+  "boundaries_within_8": 0.9963651050080775,
+  "boundaries_within_20": 0.997172859450727,
+  "unidoc_failed": 0
+ },
+ "esm": {
+  "proteins": 600,
+  "ted_domains": 1037,
+  "our_domains": 1049,
+  "proteins_all_domains_exact": 0.10333333333333333,
+  "proteins_same_domain_count": 0.82,
+  "ted_domains_exact": 0.21697203471552556,
+  "ted_domains_iou>=0.9": 0.6846673095467696,
+  "ted_domains_iou>=0.8": 0.7984570877531341,
+  "ted_domains_iou>=0.5": 0.9151398264223722,
+  "our_domains_with_ted_counterpart_iou>=0.8": 0.7893231649189705,
+  "our_domains_without_counterpart_iou<0.5": 0.09532888465204957,
+  "mean_residue_agreement": 0.893484333333333,
+  "boundaries_within_0": 0.4709507042253521,
+  "boundaries_within_1": 0.6214788732394366,
+  "boundaries_within_2": 0.6927816901408451,
+  "boundaries_within_5": 0.7948943661971831,
+  "boundaries_within_8": 0.8415492957746479,
+  "boundaries_within_20": 0.9088908450704225,
+  "unidoc_failed": 0
+ },
+ "label_tiers": {
+  "exact lookup": {
+   "ted_labelled": 740,
+   "outcomes": {
+    "same superfamily": 591,
+    "same fold": 149
+   },
+   "agree_at_ted_level": 1.0,
+   "same_fold_or_better": 1.0,
+   "precision_when_labelled": 1.0,
+   "ted_H": {
+    "n": 591,
+    "same_superfamily": 591
+   },
+   "ted_T": {
+    "n": 149,
+    "same_fold": 149
+   },
+   "ted_unlabelled": 297,
+   "ted_unlabelled_also_unlabelled": 296
+  },
+  "structure": {
+   "ted_labelled": 740,
+   "outcomes": {
+    "same superfamily": 579,
+    "same fold": 113,
+    "no label": 17,
+    "different": 23,
+    "same fold only": 8
+   },
+   "agree_at_ted_level": 0.9351351351351351,
+   "same_fold_or_better": 0.9459459459459459,
+   "precision_when_labelled": 0.9571230982019364,
+   "ted_H": {
+    "n": 591,
+    "same_superfamily": 579
+   },
+   "ted_T": {
+    "n": 149,
+    "same_fold": 113
+   },
+   "ted_unlabelled": 297,
+   "ted_unlabelled_also_unlabelled": 278
+  },
+  "sequence": {
+   "ted_labelled": 740,
+   "outcomes": {
+    "same superfamily": 579,
+    "same fold": 141,
+    "no label": 8,
+    "same fold only": 6,
+    "different": 6
+   },
+   "agree_at_ted_level": 0.972972972972973,
+   "same_fold_or_better": 0.981081081081081,
+   "precision_when_labelled": 0.9836065573770492,
+   "ted_H": {
+    "n": 591,
+    "same_superfamily": 579
+   },
+   "ted_T": {
+    "n": 149,
+    "same_fold": 141
+   },
+   "ted_unlabelled": 297,
+   "ted_unlabelled_also_unlabelled": 268
+  },
+  "sequence (own cluster removed)": {
+   "ted_labelled": 740,
+   "outcomes": {
+    "same superfamily": 532,
+    "no label": 98,
+    "same fold": 89,
+    "same fold only": 10,
+    "different": 11
+   },
+   "agree_at_ted_level": 0.8391891891891892,
+   "same_fold_or_better": 0.8527027027027027,
+   "precision_when_labelled": 0.9672897196261683,
+   "ted_H": {
+    "n": 591,
+    "same_superfamily": 532
+   },
+   "ted_T": {
+    "n": 149,
+    "same_fold": 89
+   },
+   "ted_unlabelled": 297,
+   "ted_unlabelled_also_unlabelled": 272
+  },
+  "nearest labelled homolog (own cluster removed)": {
+   "ted_labelled": 740,
+   "outcomes": {
+    "same superfamily": 568,
+    "same fold": 107,
+    "no label": 19,
+    "different": 32,
+    "same fold only": 14
+   },
+   "agree_at_ted_level": 0.9121621621621622,
+   "same_fold_or_better": 0.9310810810810811,
+   "precision_when_labelled": 0.9361997226074896,
+   "ted_H": {
+    "n": 591,
+    "same_superfamily": 568
+   },
+   "ted_T": {
+    "n": 149,
+    "same_fold": 107
+   },
+   "ted_unlabelled": 297,
+   "ted_unlabelled_also_unlabelled": 143
+  }
+ },
+ "label_e2e": {
+  "afdb": {
+   "our_domains": 1032,
+   "sources": {
+    "none": 252,
+    "ted-exact": 728,
+    "mmseqs-transfer": 24,
+    "foldclass": 16,
+    "foldseek": 12
+   },
+   "matched_iou>=0.8": 1024,
+   "of_which_ted_labelled": 734,
+   "label_agrees_at_ted_level": 1.0,
+   "outcomes_ted_labelled": {
+    "same superfamily": 587,
+    "same fold": 147
+   },
+   "outcomes_ted_unlabelled": {
+    "TED unlabelled: ours unlabelled": 250,
+    "TED unlabelled: ours labelled": 40
+   },
+   "ted_labelled_domains": 740,
+   "ted_labelled_recovered_and_same_label": 0.9918918918918919,
+   "ted_labelled_recovered": 0.9918918918918919,
+   "new_label_agrees_at_ted_level": 0.946866485013624,
+   "new_outcomes_ted_labelled": {
+    "same superfamily": 576,
+    "same fold": 119,
+    "no label": 8,
+    "different": 23,
+    "same fold only": 8
+   },
+   "new_sources": {
+    "none": 265,
+    "foldseek": 634,
+    "foldclass": 105,
+    "mmseqs-transfer": 28
+   },
+   "new_ted_labelled_recovered_and_same_label": 0.9391891891891891,
+   "new_ted_labelled_recovered_same_fold_or_better": 0.95
+  },
+  "esm": {
+   "our_domains": 1049,
+   "sources": {
+    "none": 259,
+    "foldseek": 454,
+    "foldclass": 92,
+    "ted-exact": 203,
+    "mmseqs-transfer": 41
+   },
+   "matched_iou>=0.8": 828,
+   "of_which_ted_labelled": 635,
+   "label_agrees_at_ted_level": 0.9448818897637795,
+   "outcomes_ted_labelled": {
+    "same superfamily": 514,
+    "same fold": 86,
+    "same fold only": 13,
+    "no label": 7,
+    "different": 15
+   },
+   "outcomes_ted_unlabelled": {
+    "TED unlabelled: ours unlabelled": 155,
+    "TED unlabelled: ours labelled": 38
+   },
+   "ted_labelled_domains": 740,
+   "ted_labelled_recovered_and_same_label": 0.8108108108108109,
+   "ted_labelled_recovered": 0.8581081081081081,
+   "new_label_agrees_at_ted_level": 0.9228346456692913,
+   "new_outcomes_ted_labelled": {
+    "same superfamily": 507,
+    "same fold": 79,
+    "same fold only": 18,
+    "no label": 13,
+    "different": 18
+   },
+   "new_sources": {
+    "none": 267,
+    "foldseek": 639,
+    "foldclass": 105,
+    "mmseqs-transfer": 38
+   },
+   "new_ted_labelled_recovered_and_same_label": 0.7918918918918919,
+   "new_ted_labelled_recovered_same_fold_or_better": 0.8162162162162162
+  }
+ }
+}

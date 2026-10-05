@@ -1,0 +1,24 @@
+# large data, databases, models, environments and third-party code are not versioned (see README "Setup")
+/data/
+/db/
+/models/
+/tools/
+/vendor/
+/.venv
+/.research-deps/
+/research/
+/Papers/
+/runs/
+/logs/
+__pycache__/
+*.pyc
+# benchmark: keep scripts, results, figures and the small inputs; drop structures and work dirs
+/benchmark/afdb/
+/benchmark/domains/
+/benchmark/work_afdb/
+/benchmark/work_esm/
+/benchmark/labels_*.json
+/benchmark/sample_candidates.json
+/benchmark/fetch_log.json
+/benchmark/*.out
+/benchmark/results_analyze.log
