@@ -1,24 +1,24 @@
-# large data, databases, models, environments and third-party code are not versioned (see README "Setup")
+# Only our own code, the benchmark report and its figures are versioned.
+# Everything that is downloaded, built or produced by a run stays out (README, "Install").
+/vendor/
+/tools/
 /data/
 /db/
 /models/
-/tools/
-/vendor/
 /.venv
-/.research-deps/
-/research/
-/Papers/
 /runs/
 /logs/
+/docs/
+/Papers/
+/research/
+/.research-deps/
 __pycache__/
-*.pyc
-# benchmark: keep scripts, results, figures and the small inputs; drop structures and work dirs
-/benchmark/afdb/
-/benchmark/domains/
-/benchmark/work_afdb/
-/benchmark/work_esm/
-/benchmark/labels_*.json
-/benchmark/sample_candidates.json
-/benchmark/fetch_log.json
-/benchmark/*.out
-/benchmark/results_analyze.log
+*.egg-info/
+*.out
+
+# benchmark: scripts, report and PNG figures are versioned; the inputs and outputs of a run are not
+/benchmark/*
+!/benchmark/*.py
+!/benchmark/REPORT.md
+!/benchmark/figures/
+/benchmark/figures/*.pdf

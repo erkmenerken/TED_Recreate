@@ -1,9 +1,8 @@
-"""Write REPORT_tables.md: every number of the benchmark report, generated from results/summary.json."""
-import csv, json, os
-from collections import Counter
+"""Write results/tables.md, the "Numbers" section of REPORT.md, from results/summary.json."""
+import csv, json
 from pathlib import Path
 
-here = Path(os.environ.get("BENCH_DIR", Path(__file__).parent))
+here = Path(__file__).parent
 S = json.load(open(here / "results" / "summary.json"))
 rows = lambda n: list(csv.DictReader(open(here / "results" / n), delimiter="\t"))
 pr = rows("proteins.tsv")
@@ -80,5 +79,5 @@ if "chop_esm_seconds" in T:
 for k, nm in [("ted", "TED's published domains"), ("afdb", "our domains, AlphaFold models"), ("esm", "our domains, ESMFold models")]:
     if f"label_{k}_seconds" in T:
         w(f"| CATH labels, all three routes: {nm} ({T[f'label_{k}_n']} domains) | {T[f'label_{k}_seconds']/60:.1f} min | {T[f'label_{k}_seconds']/T[f'label_{k}_n']:.2f} s per domain |")
-(here / "REPORT_tables.md").write_text("\n".join(out) + "\n")
+(here / "results" / "tables.md").write_text("\n".join(out) + "\n")
 print("\n".join(out))

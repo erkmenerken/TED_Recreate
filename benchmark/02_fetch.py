@@ -4,13 +4,11 @@ A protein is usable when the AFDB model's sequence reproduces every published md
 the sequence TED chopped) and it is at most MAXLEN residues (ESMFold on one A100).
 Output: afdb/<chain>.pdb, proteins.json (the benchmark set, in a fixed random order), fetch_log.json
 """
-import hashlib, json, random, sys
+import json, random, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R))
-from ted_recreate.chop import parse_chopping, extract
-from ted_recreate.structure import fetch_afdb_model, read_pdb_ca
+from ted_recreate.chop import cut, parse_chopping
+from ted_recreate.structure import fetch_afdb_model, md5, read_pdb_ca
 
 here = Path(__file__).parent
 N, MAXLEN = int(sys.argv[1]), int(sys.argv[2])
@@ -22,9 +20,8 @@ def get(chain):
     acc = chain.split("-")[1]
     try:
         pdb, rec = fetch_afdb_model(acc, here / "afdb")
-        seq, _, plddt = read_pdb_ca(pdb)
-        ok = all(hashlib.md5(extract(seq, parse_chopping(d["chopping"])[0]).encode()).hexdigest() == d["md5_domain"]
-                 for d in cand[chain])
+        seq, plddt = read_pdb_ca(pdb)
+        ok = all(md5(cut(seq, parse_chopping(d["chopping"])[0])) == d["md5_domain"] for d in cand[chain])
         return chain, {"pdb": str(pdb), "nres": len(seq), "sequence": seq, "seq_ok": ok,
                        "afdb_mean_plddt": sum(plddt) / len(plddt), "model_created": rec.get("modelCreatedDate"),
                        "afdb_version": rec.get("latestVersion")}

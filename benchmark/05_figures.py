@@ -4,19 +4,17 @@ Colour jobs (validated with the dataviz skill's validate_palette.js, light surfa
   the two input modes are categorical: blue = AlphaFold model (TED's input), orange = sequence only (ESMFold)
   label outcomes: dark blue = same label as TED, mid blue = same fold only, orange = different, gray = no label
 """
-import csv, json, os, sys
-from collections import Counter, defaultdict
+import csv, json
+from collections import Counter
 from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R))
 from ted_recreate.chop import parse_chopping
 
-here = Path(os.environ.get("BENCH_DIR", Path(__file__).parent))   # BENCH_DIR: analyse another run directory
+here = Path(__file__).parent
 res, figdir = here / "results", here / "figures"
 figdir.mkdir(exist_ok=True)
 

@@ -1,4 +1,4 @@
-"""Run our functions on the benchmark proteins (GPU job; see 03_run.sbatch).
+"""Run our functions on the benchmark proteins. GPU job: sbatch scripts/gpu.sbatch benchmark/03_run.py
 
 For every protein in proteins.json:
   afdb mode   ted_chop(pdb = AlphaFold model TED used)        -> chop_afdb.json
@@ -7,15 +7,14 @@ and CATH labels (all three tiers, each recorded separately) for three sets of do
   labels_ted.json    TED's published domains, cut from the AlphaFold model
   labels_afdb.json   our domains from the AlphaFold model
   labels_esm.json    our domains from the ESMFold model
-Also the TM-score between each ESMFold model and its AlphaFold model (tm_esm_vs_afdb.json) and stage timings.
+Also the TM-score between each ESMFold model and its AlphaFold model (tm_esm_vs_afdb.json), each TED domain's own
+sequence cluster (own_cluster.tsv, for the "as if new to TED" scores) and stage timings.
 Each stage is skipped if its output exists, so the job can be resubmitted.
 """
-import json, re, subprocess, sys, time, traceback
+import json, os, re, subprocess, sys, time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R))
 from ted_recreate import config
 from ted_recreate.chop import ChopResult, Domain, parse_chopping, ted_chop_batch
 from ted_recreate.classify import Classifier, write_domain_pdb
@@ -35,12 +34,12 @@ def chop_safe(items, workdir, chunk=100):
     for i in range(0, len(items), chunk):
         part = items[i:i + chunk]
         try:
-            results += ted_chop_batch(part, workdir=workdir / f"chunk{i:04d}", keep_workdir=True)
+            results += ted_chop_batch(part, workdir=workdir / f"chunk{i:04d}")
         except Exception as e:
             log(f"chunk {i} failed ({repr(e)[:200]}); retrying one by one")
             for k, it in enumerate(part):
                 try:
-                    results += ted_chop_batch([it], workdir=workdir / f"chunk{i:04d}_single{k:03d}", keep_workdir=True)
+                    results += ted_chop_batch([it], workdir=workdir / f"chunk{i:04d}_single{k:03d}")
                 except Exception as e2:
                     failed[it["name"]] = repr(e2)[:300]
                     log(f"  {it['name']} failed: {repr(e2)[:200]}")
@@ -90,6 +89,16 @@ if not tm_out.exists():
         json.dump(dict(ex.map(tm, esm)), open(tm_out, "w"), indent=1)
     log("TM-scores done")
 
+# --- each TED domain's own sequence cluster: rows (representative, member, label, method) of TED's cluster table ---
+own_out = here / "own_cluster.tsv"
+if not own_out.exists():
+    ids = here / "ted_domain_ids.txt"
+    ids.write_text("".join(d["ted_id"] + "\n" for v in prot.values() for d in v["ted"]))
+    clusters = config.TED_MMSEQS_DB.parent / "clusters.sorted.tsv"       # written by scripts/build_ted_mmseqs_db.py
+    subprocess.run(f"awk -F'\\t' 'NR==FNR {{want[$1]=1; next}} ($2 in want)' {ids} {clusters} > {own_out}.part "
+                   f"&& mv {own_out}.part {own_out}", shell=True, check=True, env={**os.environ, "LC_ALL": "C"})
+    log("own clusters done")
+
 # --- CATH labels ---
 cls = None
 
@@ -135,5 +144,4 @@ for tag, results in (("afdb", afdb), ("esm", esm)):
 log("all stages done")
 # after CUDA work the interpreter can hang in teardown and keep the GPU; everything is written, so leave now
 sys.stdout.flush()
-import os
 os._exit(0)
