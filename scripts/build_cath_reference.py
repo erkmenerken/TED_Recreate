@@ -7,7 +7,7 @@ on essentially the same scale. Outputs (db/cath/):
   cath43_names.tsv           CATH node -> name
   foldclass_s40.pt/.index    Merizo-search Foldclass embeddings + CA coords restricted to S40 domains
 """
-import pickle, sys
+import pickle
 from pathlib import Path
 import torch
 

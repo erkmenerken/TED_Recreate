@@ -6,15 +6,13 @@
 #SBATCH -c 16
 #SBATCH --mem=200G
 #SBATCH -t 1-00:00:00
-#SBATCH -o /scratch/erkmenerken22/TED_Recreate/logs/mmseqs_server-%j.out
-# Keeps the TED lookup DB hot and answers searches over HTTP (see ted_recreate/server.py).
-#   CPU mode (default): the k-mer index lives in the page cache (~RAM of the index size), no GPU needed.
-#   GPU mode: sbatch --gres=gpu:tesla_a100:1 --mem=64G scripts/mmseqs_server.sbatch gpu
-# The address is written to db/mmseqs/SERVER; ted_recreate.classify uses it automatically.
-# Stop with: scancel <jobid>
-MODE=${1:-cpu}
-R=/scratch/erkmenerken22/TED_Recreate
-cd $R
-export TMPDIR=$R/db/tmp_server
-mkdir -p $TMPDIR
-exec $R/.venv/bin/python -m ted_recreate.server --mode $MODE --threads ${SLURM_CPUS_PER_TASK:-16}
+#SBATCH -o %x-%j.out
+# Keep the TED lookup DB in memory and answer searches over HTTP (ted_recreate/server.py). Submit from the
+# repository root:
+#   sbatch scripts/mmseqs_server.sbatch                                          CPU: the index sits in RAM, no GPU
+#   sbatch --gres=gpu:tesla_a100:1 --mem=64G scripts/mmseqs_server.sbatch gpu    GPU: the DB sits in GPU memory
+# cath_label finds the server by itself. Stop it with scancel when you are done: it holds the RAM or the GPU.
+set -euo pipefail
+export TMPDIR=$PWD/db/tmp_server
+mkdir -p "$TMPDIR"
+exec .venv/bin/python -m ted_recreate.server --mode "${1:-cpu}"

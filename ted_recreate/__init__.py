@@ -1,16 +1,17 @@
-"""Re-creation of the TED (The Encyclopedia of Domains) domain chopping and CATH labelling."""
-import ctypes as _ctypes
-import sys as _sys
-from pathlib import Path as _Path
+"""Re-creation of how TED (The Encyclopedia of Domains) chops proteins into domains and gives them CATH labels."""
+import ctypes
+import sys
+from pathlib import Path
 
-# The .venv python is the conda env "ted". Its pyarrow (pulled in by transformers -> sklearn when ESMFold
-# is imported) needs a newer libstdc++ than /lib64 has. Whichever libstdc++ loads first wins, so load the
-# env's copy globally before anything else imports a C++ extension.
-_libstdcxx = _Path(_sys.executable).resolve().parent.parent / "lib" / "libstdc++.so.6"
-if _libstdcxx.exists():
-    try:
-        _ctypes.CDLL(str(_libstdcxx), mode=_ctypes.RTLD_GLOBAL)
-    except OSError:
-        pass
+# In a conda environment, pyarrow (pulled in by transformers when ESMFold is imported) needs a newer libstdc++ than
+# the system one, and whichever copy is loaded first wins. Load the environment's copy before anything else does.
+try:
+    ctypes.CDLL(str(Path(sys.executable).resolve().parents[1] / "lib/libstdc++.so.6"), mode=ctypes.RTLD_GLOBAL)
+except OSError:     # not a conda environment: nothing to do
+    pass
 
-from .chop import ted_chop, ted_chop_batch, ChopResult, Domain  # noqa: E402,F401
+from .chop import ChopResult, Domain, ted_chop, ted_chop_batch  # noqa: E402
+from .classify import Classifier, LabelResult, cath_label, cath_label_chopped  # noqa: E402
+
+__all__ = ["ted_chop", "ted_chop_batch", "cath_label", "cath_label_chopped", "Classifier", "ChopResult", "Domain",
+           "LabelResult"]

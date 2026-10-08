@@ -19,10 +19,8 @@ Steps (each skipped if its output exists):
   4 ted100               mmseqs createdb
 The CPU index (createindex) and GPU padded DB (makepaddedseqdb) are made by build_lookup_dbs.sbatch.
 """
-import gzip
 import hashlib
 import itertools
-import mmap
 import os
 import subprocess
 import sys

@@ -5,15 +5,13 @@ labels_ted.json, labels_afdb.json, labels_esm.json, own_cluster.tsv, timings.jso
 Outputs (results/): ted_domains.tsv (one row per published TED domain, both modes), our_domains.tsv,
 proteins.tsv, boundaries.tsv, label_tiers.tsv, label_e2e.tsv, summary.json
 """
-import csv, json, os, re, sys
+import csv, json, re
 from collections import Counter
 from pathlib import Path
 
-R = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(R))
 from ted_recreate.chop import parse_chopping
 
-here = Path(os.environ.get("BENCH_DIR", Path(__file__).parent))   # BENCH_DIR: analyse another run directory
+here = Path(__file__).parent
 out = here / "results"
 out.mkdir(exist_ok=True)
 prot = json.load(open(here / "proteins.json"))
