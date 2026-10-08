@@ -1,5 +1,4 @@
-# Only our own code, the benchmark report and its figures are versioned.
-# Everything that is downloaded, built or produced by a run stays out (README, "Install").
+# downloads, builds and run outputs
 /vendor/
 /tools/
 /data/
@@ -16,7 +15,7 @@ __pycache__/
 *.egg-info/
 *.out
 
-# benchmark: scripts, report and PNG figures are versioned; the inputs and outputs of a run are not
+# benchmark: keep the scripts, the report and the PNG figures
 /benchmark/*
 !/benchmark/*.py
 !/benchmark/REPORT.md

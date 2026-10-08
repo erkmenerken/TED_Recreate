@@ -140,5 +140,3 @@ setup.sh         downloads the third-party code and programs into vendor/ and to
 scripts/         data download, lookup builders, Slurm wrappers
 benchmark/       the 600-protein test against TED: scripts 01 to 06, REPORT.md, figures/
 ```
-
-Everything downloaded or built (`vendor/ tools/ data/ db/ models/`) stays out of git.
